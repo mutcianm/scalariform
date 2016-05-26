@@ -1810,6 +1810,7 @@ class ScalaParser(tokens: Array[Token]) {
         Left(nextToken())
       case LBRACE ⇒
         Right(xmlEmbeddedScala(isPattern))
+      case _ => ???
     }
     XmlAttribute(name, whitespaceOption, equals, whitespaceOption2, valueOrEmbeddedScala)
   }

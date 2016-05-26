@@ -8,7 +8,8 @@ lazy val commonSettings = inConfig(Test)(Defaults.testSettings) ++
   scalaVersion := crossScalaVersions.value.head,
   crossScalaVersions := Seq(
     "2.11.8",
-    "2.10.6"
+    "2.10.6",
+    "2.12.0-M4"
   ),
   exportJars := true, // Needed for cli oneJar
   scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
@@ -68,6 +69,10 @@ lazy val subprojectSettings = commonSettings :+ (
 def scala2_11Dependencies = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, 11)) => Seq(
+      "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
+    )
+    case Some((2, 12)) => Seq(
       "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
       "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
     )

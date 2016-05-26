@@ -1461,6 +1461,7 @@ class InferredSemicolonScalaParser(tokens: Array[Token]) {
         nextToken()
       case LBRACE ⇒
         xmlEmbeddedScala(isPattern)
+      case _ => ???
     }
   }
 
