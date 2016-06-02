@@ -4,7 +4,7 @@ import scalariform.formatter.preferences._
 lazy val commonSettings = inConfig(Test)(Defaults.testSettings) ++
     SbtScalariform.defaultScalariformSettings ++ Seq(
   organization := "org.scalariform",
-  sonatypeProfileName := organization.value,
+  licenses := Seq("MIT" -> url("http://www.opensource.org/licenses/mit-license.html")),
   scalaVersion := crossScalaVersions.value.head,
   crossScalaVersions := Seq(
     "2.11.8",
@@ -17,11 +17,7 @@ lazy val commonSettings = inConfig(Test)(Defaults.testSettings) ++
       scalac2_10Options ++ scalac2_11Options
     case _ =>
       scalac2_10Options
-  }),
-  credentials ++= {
-    val creds = Path.userHome / ".m2" / "credentials"
-    if (creds.exists) Seq(Credentials(creds)) else Nil
-  }
+  })
 )
 
 def scalac2_10Options = Seq(
@@ -43,23 +39,11 @@ def scalac2_11Options = Seq(
 )
 
 def publishSettings(projectName: String) = Seq(
-  pomExtra := pomExtraXml,
-  publishMavenStyle := true,
   publishArtifact in Test := false,
-  publishArtifact in (Compile, packageDoc) := true,
-  publishArtifact in (Compile, packageSrc) := true,
-  pomIncludeRepository := { _ ⇒ false },
-  buildInfoKeys := Seq[BuildInfoKey](version),
-  buildInfoPackage := projectName,
-  publishTo := getPublishToRepo.value
+  publishMavenStyle := false,
+  bintrayOrganization := Some("jetbrains"),
+  bintrayRepository := "scala-plugin-deps"
 )
-
-def getPublishToRepo = Def.setting {
-  if (isSnapshot.value)
-    Some(Opts.resolver.sonatypeSnapshots)
-  else
-    Some(Opts.resolver.sonatypeStaging)
-}
 
 lazy val subprojectSettings = commonSettings :+ (
   ScalariformKeys.preferences := PreferencesImporterExporter.loadPreferences(
