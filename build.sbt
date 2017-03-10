@@ -9,7 +9,7 @@ lazy val commonSettings = inConfig(Test)(Defaults.testSettings) ++
   crossScalaVersions := Seq(
     "2.11.8",
     "2.10.6",
-    "2.12.0-M4"
+    "2.12.1"
   ),
   exportJars := true, // Needed for cli oneJar
   scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
@@ -70,7 +70,7 @@ lazy val scalariform = (project
   settings(publishSettings("scalariform"))
   settings(
     libraryDependencies ++= scala2_11Dependencies.value,
-    libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test",
     // sbt doesn't automatically load the content of the MANIFST.MF file, therefore
     // we have to do it here by ourselves Furthermore, the version format in the
     // MANIFEST.MF is `x.y.z.qualifier` but we need to replace the `qualifier` part
